@@ -1,0 +1,6 @@
+{
+  "main": "open-banking-api.raml",
+  "name": "open-banking-api",
+  "classifier": "raml",
+  "tags": []
+}

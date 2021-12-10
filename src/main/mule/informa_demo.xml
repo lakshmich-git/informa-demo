@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="594d7b79-8fea-4ab2-8edd-4067937fdc77" >
+		<db:my-sql-connection host="127.0.0.1" port="3306" user="root" password="Srilakshmi@676" database="testdb" />
+	</db:config>
+	<flow name="demo-mainFlow" doc:id="1c194bf2-3933-40e1-a964-138de3a2928b" >
+		<logger level="INFO" doc:name="before DB call" doc:id="815b26d5-433d-4a1c-a2e7-41ab6a04641b" message="before DB select "/>
+		<db:select doc:name="artist Dtls Select" doc:id="479b3877-4f97-4b2e-b9dd-e1aa85523f0e" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * FROM testdb.artistdata ]]></db:sql>
+		</db:select>
+		<logger level="INFO" doc:name="after DB call " doc:id="a5f0b2e3-b2a9-4d20-892f-516eade98b58" message="after DB call--&gt;: #[payload]"/>
+		<ee:transform doc:name="responsePayload" doc:id="34776a0d-2ba9-41da-921a-99196162eec2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="artistprofile-mainFlow" doc:id="5a4e25a7-e1f6-4e11-88b3-b5efd8512a3e" >
+		<logger level="INFO" doc:name="before DB call" doc:id="5f5d90bc-3a85-44a8-91e2-db8e333d4c2e" message="before DB select "/>
+		<db:insert doc:name="artist profile creation" doc:id="25f281c6-4152-45bb-a165-d99000b6ae19" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert into testdb.artistdata (idartistname, artistskill) 
+values (:name, :skills);]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+'name':vars.idartistname,
+'skills':vars.artistskill
+}]]]></db:input-parameters>
+		</db:insert>
+		<logger level="INFO" doc:name="after DB call " doc:id="2adcdbc8-dd52-4135-a2a7-ba45aa5d3771" message="after DB call--&gt;: #[payload]"/>
+		<ee:transform doc:name="responsePayload" doc:id="ca63db24-ada6-4ce2-be4d-7995dbae6519" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+<flow name="artistName-mainFlow" doc:id="01603578-1376-465f-8338-8ffd2da28793" >
+		<logger level="INFO" doc:name="before DB call" doc:id="c5954923-f25c-4dc7-9694-a264a5342b9d" message="before DB select "/>
+		<db:select doc:name="artist Dtls Select" doc:id="ca347f80-17bf-44f6-9b84-d209d33f1004" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT idartistname, artistskill FROM testdb.artistdata where idartistname= :name;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+'name':vars.artistName
+}]]]></db:input-parameters>
+		
+</db:select>
+		<logger level="INFO" doc:name="after DB call " doc:id="f4910db3-09e3-4b0a-bdb1-b42f977b7fca" message="after DB call--&gt;: #[payload]"/>
+		<ee:transform doc:name="responsePayload" doc:id="d9688f65-5979-44e8-8ab5-29afa92132da" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

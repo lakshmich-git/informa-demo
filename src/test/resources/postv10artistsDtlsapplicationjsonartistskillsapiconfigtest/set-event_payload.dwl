@@ -1,0 +1,4 @@
+{
+  "idartistname": "satvika",
+  "artistskill": "dance"
+}

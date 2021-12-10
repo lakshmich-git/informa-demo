@@ -1,0 +1,30 @@
+#%RAML 1.0 Library
+
+traits:
+  errorResp: !include ../traits/errorRespTrait.raml
+
+resourceTypes:
+  collection:
+    get?:
+      description: This API will fetch <<resourcePathName>> details
+      is: [errorResp]
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleReference1>>
+
+    post?:
+      description: This API will create <<resourcePathName>> 
+      is: [errorResp]
+      body:
+        application/json:
+          example: | 
+            <<exampleReference2>>
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleReference3>>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="artist-skills-api-suite.xml" />
+	<munit:test name="get:\v1.0\artistsDtls:artist-skills-api-config-test" doc:id="52eed753-6f3b-47bf-b577-8d0eed83f589">
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="1f64f629-b0d6-4a71-924e-e0bf0a1bec2e" >
+				<munit:payload value="#[readUrl('classpath://getv10artistsDtlsartistskillsapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getv10artistsDtlsartistskillsapiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getv10artistsDtlsartistskillsapiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\v1.0\artistsDtls:artist-skills-api-config" doc:id="6bf5d2b8-74d9-4196-9f32-584a14fbe632" name="get:\v1.0\artistsDtls:artist-skills-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="843b26e2-ddff-47d8-afdc-35f9e5054c16" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getv10artistsDtlsartistskillsapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\v1.0\artistsDtls\(artistName):artist-skills-api-config-test" doc:id="ce05afb2-5faa-47b6-b31d-5ab6134fbe59">
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="e0938deb-fb46-46e7-85b4-86487a868759" >
+				<munit:payload value="#[readUrl('classpath://getv10artistsDtlsartistNameartistskillsapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getv10artistsDtlsartistNameartistskillsapiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getv10artistsDtlsartistNameartistskillsapiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\v1.0\artistsDtls\(artistName):artist-skills-api-config" doc:id="1fd16925-eb8b-4ca8-b56d-c3317503459c" name="get:\v1.0\artistsDtls\(artistName):artist-skills-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="c4f1d355-c409-4054-addc-f65863a933fa" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getv10artistsDtlsartistNameartistskillsapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\v1.0\artistsDtls:application\json:artist-skills-api-config-test" doc:id="c45e1053-d19f-45eb-be44-0c532ae06e82">
+		<munit:behavior >
+			<munit:set-event doc:name="Set Input" doc:id="aa848367-5a68-476a-a84c-086c2c9a2245" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postv10artistsDtlsapplicationjsonartistskillsapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postv10artistsDtlsapplicationjsonartistskillsapiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postv10artistsDtlsapplicationjsonartistskillsapiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\v1.0\artistsDtls:application\json:artist-skills-api-config" doc:id="c8027b52-0de5-44a4-99e9-10d3380e4b81" name="post:\v1.0\artistsDtls:application\json:artist-skills-api-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="3343b2fc-2418-47eb-b6e2-a90c7669129b" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postv10artistsDtlsapplicationjsonartistskillsapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
